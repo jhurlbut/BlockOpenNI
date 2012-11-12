@@ -95,12 +95,12 @@ class BlockOpenNISampleAppApp : public AppBasic, V::UserListener
 public:
 	static const int WIDTH = 800;
 	static const int HEIGHT = 600;
-	//changing to asus xtion res
-	static const int KINECT_COLOR_WIDTH = 320;	//1280;
-	static const int KINECT_COLOR_HEIGHT = 240;	//1024;
+
+	static const int KINECT_COLOR_WIDTH = 640;	//1280;
+	static const int KINECT_COLOR_HEIGHT = 480;	//1024;
 	static const int KINECT_COLOR_FPS = 30;	//15;
-	static const int KINECT_DEPTH_WIDTH = 320;
-	static const int KINECT_DEPTH_HEIGHT = 240;
+	static const int KINECT_DEPTH_WIDTH = 640;
+	static const int KINECT_DEPTH_HEIGHT = 480;
 	static const int KINECT_DEPTH_FPS = 30;
 
 
@@ -176,7 +176,7 @@ void BlockOpenNISampleAppApp::setup()
 {
     V::OpenNIDeviceManager::USE_THREAD = false;
 	_manager = V::OpenNIDeviceManager::InstancePtr();
-    _manager->createDevices( 1, V::NODE_TYPE_IMAGE | V::NODE_TYPE_DEPTH | V::NODE_TYPE_SCENE | V::NODE_TYPE_USER , V::RES_1280x1024 );
+    _manager->createDevices( 1, V::NODE_TYPE_IMAGE | V::NODE_TYPE_DEPTH | V::NODE_TYPE_SCENE | V::NODE_TYPE_USER );
 	_device0 = _manager->getDevice( 0 );
     _device0->setDepthShiftMul( 3 );
 	if( !_device0 ) 
@@ -210,8 +210,8 @@ void BlockOpenNISampleAppApp::update()
     }
     
 	// Update textures
-	mColorTex =getColorImage();
-	mDepthTex = getDepthImage();
+	mColorTex.update( getColorImage() );
+	mDepthTex.update( getDepthImage() );
     
 
 	// Uses manager to handle users.
@@ -219,7 +219,7 @@ void BlockOpenNISampleAppApp::update()
         it != mUsersTexMap.end();
         ++it )
     {
-        it->second.update( Channel32f(getUserImage( it->first )) );
+        it->second.update( getUserImage( it->first ) );
     }
 }
 

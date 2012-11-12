@@ -84,11 +84,11 @@ class BlockOpenNISampleAppApp : public AppBasic
 public:
 	static const int WIDTH = 1280;
 	static const int HEIGHT = 720;
-	//changing to asus xtion resolution
-	static const int KINECT_COLOR_WIDTH = 320;
-	static const int KINECT_COLOR_HEIGHT = 240;
-	static const int KINECT_DEPTH_WIDTH = 320;
-	static const int KINECT_DEPTH_HEIGHT =240;
+
+	static const int KINECT_COLOR_WIDTH = 1280;
+	static const int KINECT_COLOR_HEIGHT = 1024;
+	static const int KINECT_DEPTH_WIDTH = 1280;
+	static const int KINECT_DEPTH_HEIGHT = 1024;
 
 
 	void prepareSettings( Settings *settings );
@@ -168,8 +168,8 @@ void BlockOpenNISampleAppApp::update()
 
 
 	// Update textures
-	mColorTex = getColorImage();
-	mDepthTex = getDepthImage();
+	mColorTex.update( getColorImage() );
+	mDepthTex.update( getDepthImage() );
 }
 
 
